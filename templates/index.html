@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="task-input">
+    <form action="/add" method="post" class="form-inline">
+        <input type="text" name="task" placeholder="Enter task">
+        <button type="submit" style="width: 98%;">Add</button>
+    </form>
+</div>
+    <br><br>
+    <div class="controls">
+        <div class="filters">
+          <a href="/"  style="text-decoration:none" ><span class="active" id="all">All</span></a>
+          <a href="/pending"  style="text-decoration:none" ><span id="pending">Pending</span></a>
+          <a href="/completed"  style="text-decoration:none" ><span id="completed">Completed</span></a>
+        </div>
+        <a href="/clearall"><button class="clear-btn" >Clear All</button></a>
+      </div>  
+
+
+    <div>
+        {% for todo in todos %}
+            <div class="task">
+                {% if todo.completed %}
+                   <p style="margin-left: 10px;"> {{ todo.task }} &#x2713; </p>
+                {% else %}
+                <p style="margin-left: 10px;"> {{ todo.task }} </p>
+                {% endif %}
+                <div class="btn-group" style="width:40%">
+                    {% if todo.completed %} 
+                    <a href="undone/{{ todo.id }}"><button  class="clear-btn" style="width: 45%;">Undone</button></a>
+                    {% else %}
+                    <a href="done/{{ todo.id }}"><button class="clear-btn" style="width: 45%;">Done</button></a>
+                    {% endif %}
+                    <a href="delete/{{ todo.id }}"><button class="clear-btn" style="width: 50%;">Delete</button></a>
+                </div>
+            </div>
+        {% else %}
+        <h1 style="text-align: center;color: #bfbfbf;" class="my-5">NO TASK</h1>
+        {% endfor %}
+    </div>
+
+{% endblock content %}
